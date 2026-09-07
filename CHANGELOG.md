@@ -2,6 +2,10 @@
 
 ## [v1.3.4] 2026-09-07
 
+### Bug Fix
+
+- Fix RTN fallback scale layout for groupsize=-1
+
 ## [v1.3.3] 2026-09-03
 
 ### Enhancement
