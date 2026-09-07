@@ -361,6 +361,11 @@ runner.save_quantized_model("./output/my_quantized_model")
 runner.save_dequantized_model("./output/my_dequantized_model")
 ```
 
+!!! note "Qwen3.6 save format"
+    For Qwen3.6 models, save with `save_format="full_wrapper"` before loading
+    with `load_quantized_model()` or serving with vLLM. See
+    [Basic Usage](basic-usage.md#step-5-save-the-model).
+
 ### Load a saved quantized model
 
 ```python

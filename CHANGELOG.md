@@ -6,6 +6,10 @@
 
 - Fix scale layout handling for `groupsize=-1` in RTN fallback. This fallback is used when an MoE expert receives no routed calibration tokens, because GPTQ cannot compute activation-based statistics for that expert. The fix keeps the fallback result compatible with GPTQ's per-channel dequantization path.
 
+### Documentation
+
+- Clarify that Qwen3.6 checkpoints should be saved with `save_format="full_wrapper"` for downstream loading paths, including OneComp `load_quantized_model()` and vLLM serving.
+
 ## [v1.3.3] 2026-09-03
 
 ### Enhancement
