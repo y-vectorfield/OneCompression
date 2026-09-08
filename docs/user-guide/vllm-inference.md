@@ -127,10 +127,10 @@ runner.save_quantized_model("./Llama-3.1-8B-Instruct-gptq-4bit")
 ```
 
 !!! note "Qwen3.6 save format"
-    Qwen3.6 checkpoints should be saved with
-    `save_quantized_model(..., save_format="full_wrapper")` before downstream
-    inference or serving. See [Basic Usage](basic-usage.md#step-5-save-the-model)
-    for the general save/load guidance.
+    Qwen3.6 checkpoints used for vLLM serving should be saved with
+    `save_quantized_model(..., save_format="full_wrapper")`. See
+    [Basic Usage](basic-usage.md#step-5-save-the-model) for the shared
+    Qwen3.6 save-format guidance, including other confirmed workflows.
 
     For MoE variants (e.g. Qwen3.6-A3B), `full_wrapper` also drops each expert's
     trivial `g_idx` buffer, since vLLM's GPTQ `FusedMoE` kernel has no `g_idx`

@@ -156,19 +156,16 @@ runner.save_quantized_model("./output/quantized")
 ```
 
 !!! note "Qwen3.6 save format"
-    Qwen3.6 is quantized through its text-model layout, but downstream
-    loaders may expect the full Hugging Face wrapper layout. When saving
-    Qwen3.6 models for later inference or serving, pass
-    `save_format="full_wrapper"` to `save_quantized_model()`:
+    Qwen3.6 is quantized through its text-model layout. For confirmed
+    downstream workflows that require the full Hugging Face wrapper layout,
+    including vLLM serving and the current GGUF export workflow, save Qwen3.6
+    checkpoints with `save_format="full_wrapper"`:
 
-    ```python
-    runner.save_quantized_model("./output/qwen36_quantized", save_format="full_wrapper")
-    ```
+    `runner.save_quantized_model("./output/qwen36_quantized", save_format="full_wrapper")`
 
-    This applies to downstream loading paths, including OneComp's
-    `load_quantized_model()` and vLLM serving. The option is specific to
-    Qwen3.6 and raises `RuntimeError` for other models. Leave `save_format` at
-    its default (`"auto"`) for other architectures.
+    The option is specific to Qwen3.6 and raises `RuntimeError` for other
+    models. Leave `save_format` at its default (`"auto"`) for other
+    architectures.
 
 !!! note "vLLM serving is method-specific"
     `save_quantized_model()` produces a model loadable by the OneComp loader for any

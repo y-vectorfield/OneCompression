@@ -362,8 +362,9 @@ runner.save_dequantized_model("./output/my_dequantized_model")
 ```
 
 !!! note "Qwen3.6 save format"
-    For Qwen3.6 models, save with `save_format="full_wrapper"` before loading
-    with `load_quantized_model()` or serving with vLLM. See
+    For confirmed downstream workflows that require the full Hugging Face
+    wrapper layout, including vLLM serving and the current GGUF export workflow,
+    save Qwen3.6 models with `save_format="full_wrapper"`. See
     [Basic Usage](basic-usage.md#step-5-save-the-model).
 
 ### Load a saved quantized model

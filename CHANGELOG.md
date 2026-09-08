@@ -8,7 +8,7 @@
 
 ### Documentation
 
-- Clarify that Qwen3.6 checkpoints should be saved with `save_format="full_wrapper"` for downstream loading paths, including OneComp `load_quantized_model()` and vLLM serving.
+- Clarify the confirmed Qwen3.6 `save_format="full_wrapper"` workflows, including vLLM serving and the current GGUF export workflow.
 
 ## [v1.3.3] 2026-09-03
 
