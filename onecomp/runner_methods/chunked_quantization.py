@@ -34,7 +34,7 @@ import torch
 from onecomp.calibration import CalibrationConfig, prepare_calibration_dataset
 from onecomp.model_config import ModelConfig
 from onecomp.quantizer._quantizer import QuantizationResult, Quantizer
-from onecomp.utils.device import empty_cache
+from onecomp.utils.device import empty_cache, is_mps_device
 from onecomp.utils.quantization_progress import QuantizationProgressTracker
 
 logger = getLogger(__name__)
@@ -74,7 +74,12 @@ def run_chunked_quantization(
     num_layers_per_group = calibration_config.num_layers_per_group
 
     # Load model
-    model = model_config.load_model()
+    if is_mps_device(model_config.get_device()):
+        # device_map="mps" is unstable for large sharded checkpoints; load on CPU then move.
+        model = model_config.load_model(device_map="cpu")
+        model = model.to("mps")
+    else:
+        model = model_config.load_model()
     tokenizer = model_config.load_tokenizer()
     input_device = next(model.parameters()).device
 
