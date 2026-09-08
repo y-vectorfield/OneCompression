@@ -4,7 +4,7 @@
 
 ### Bug Fix
 
-- Fix RTN fallback scale layout for groupsize=-1
+- Fix scale layout handling for `groupsize=-1` in RTN fallback. This fallback is used when an MoE expert receives no routed calibration tokens, because GPTQ cannot compute activation-based statistics for that expert. The fix keeps the fallback result compatible with GPTQ's per-channel dequantization path.
 
 ## [v1.3.3] 2026-09-03
 
