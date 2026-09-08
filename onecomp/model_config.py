@@ -11,7 +11,7 @@ from logging import getLogger
 import torch
 from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 
-from .utils.device import get_default_device
+from .utils.device import get_default_device, is_mps_device
 from .utils.dtype import needs_bfloat16
 
 try:
@@ -95,9 +95,10 @@ class ModelConfig:
                 If ``None`` (default), ``self.device`` is used.
         """
         effective_device = device_map if device_map is not None else self.device
+        load_device = "cpu" if is_mps_device(effective_device) else effective_device
         kwargs = dict(
             dtype=self.dtype if self.dtype == "auto" else getattr(torch, self.dtype),
-            device_map=effective_device,
+            device_map=load_device,
         )
 
         config = self.load_config()
@@ -135,6 +136,8 @@ class ModelConfig:
                 raise
             self.logger.info("AutoModelForCausalLM failed; trying AutoModelForImageTextToText.")
             model = _AutoVLM.from_pretrained(self.get_model_id_or_path(), **kwargs)
+        if is_mps_device(effective_device):
+            model = model.to(effective_device)
         model.eval()
         self.logger.info("Model loaded with dtype=%s", next(model.parameters()).dtype)
         return model

@@ -674,12 +674,7 @@ class Runner:
     def quantize_with_calibration(self):
         """Quantize the model with calibration"""
 
-        if is_mps_device(self.model_config.get_device()):
-            # device_map="mps" is unstable for large sharded checkpoints; load on CPU then move.
-            model = self.model_config.load_model(device_map="cpu")
-            model = model.to("mps")
-        else:
-            model = self.model_config.load_model()
+        model = self.model_config.load_model()
         logger = self.logger
         input_device = next(model.parameters()).device
         inputs = self.prepare_calibration_dataset(input_device, model=model)
