@@ -98,7 +98,7 @@ class ModelConfig:
         if effective_device == "auto":
             target_device = get_default_device()
         else:
-            target_device = torch.device(effective_device)
+            target_device = effective_device
         load_device = "cpu" if is_mps_device(target_device) else effective_device
         kwargs = dict(
             dtype=self.dtype if self.dtype == "auto" else getattr(torch, self.dtype),
